@@ -2,13 +2,13 @@
 
 public class CameraControl : MonoBehaviour
 {
-    public float m_DampTime = 0.2f;                 
-    public float m_ScreenEdgeBuffer = 4f;           
-    public float m_MinSize = 6.5f;                  
-    [HideInInspector] public Transform[] m_Targets; 
+    public float m_DampTime = 0.2f; // Tiempo hasta realizar movimiento
+    public float m_ScreenEdgeBuffer = 4f; // Distancia de la cámara con respecto a los tanques
+    public float m_MinSize = 6.5f; // Tamaño mínimo de la cámara
+    /*[HideInInspector]*/ public Transform[] m_Targets; // Matriz de transformaciones de los tanques
 
 
-    private Camera m_Camera;                        
+    private Camera m_Camera;            
     private float m_ZoomSpeed;                      
     private Vector3 m_MoveVelocity;                 
     private Vector3 m_DesiredPosition;              
@@ -40,12 +40,12 @@ public class CameraControl : MonoBehaviour
         Vector3 averagePos = new Vector3();
         int numTargets = 0;
 
-        for (int i = 0; i < m_Targets.Length; i++)
+        for (int i = 0; i < m_Targets.Length; i++) // Iterar hasta llegar a la última transformación
         {
-            if (!m_Targets[i].gameObject.activeSelf)
-                continue;
+            if (!m_Targets[i].gameObject.activeSelf) // Si el objeto no está activo
+                continue; // Ir a la siguiente iteración
 
-            averagePos += m_Targets[i].position;
+            averagePos += m_Targets[i].position; // Posición promedio igual a la agregación de la tranformación actual
             numTargets++;
         }
 
@@ -67,7 +67,7 @@ public class CameraControl : MonoBehaviour
 
     private float FindRequiredSize()
     {
-        Vector3 desiredLocalPos = transform.InverseTransformPoint(m_DesiredPosition);
+        Vector3 desiredLocalPos = transform.InverseTransformPoint(m_DesiredPosition); // Posición deseada en el espacio local de Camera Rig
 
         float size = 0f;
 
@@ -76,9 +76,9 @@ public class CameraControl : MonoBehaviour
             if (!m_Targets[i].gameObject.activeSelf)
                 continue;
 
-            Vector3 targetLocalPos = transform.InverseTransformPoint(m_Targets[i].position);
+            Vector3 targetLocalPos = transform.InverseTransformPoint(m_Targets[i].position); // Posición del target en el espacio local
 
-            Vector3 desiredPosToTarget = targetLocalPos - desiredLocalPos;
+            Vector3 desiredPosToTarget = targetLocalPos - desiredLocalPos; // Posición deseada del Camera Rig
 
             size = Mathf.Max (size, Mathf.Abs (desiredPosToTarget.y));
 
