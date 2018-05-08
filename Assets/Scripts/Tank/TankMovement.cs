@@ -49,7 +49,7 @@ public class TankMovement : MonoBehaviour
 
     private void Update()
     {
-        // Store the player's input and make sure the audio for the engine is playing.
+        // Almacenar la entrada del jugador y controlar el audio que reproduce
         m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
         m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
 
@@ -59,7 +59,7 @@ public class TankMovement : MonoBehaviour
 
     private void EngineAudio()
     {
-        // Play the correct audio clip based on whether or not the tank is moving and what audio is currently playing.
+        // Reproducir el audio correcto de acuerdo a si el tanque está en movimiento y al que este actualmente reproduciéndose
 
         if(Mathf.Abs(m_MovementInputValue) < 0.1f && Mathf.Abs(m_TurnInputValue) < 0.1f)
         {
@@ -84,7 +84,7 @@ public class TankMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Move and turn the tank.
+        // Mover y rotar el tanque
         Move();
         Turn();
     }
@@ -92,7 +92,7 @@ public class TankMovement : MonoBehaviour
 
     private void Move()
     {
-        // Adjust the position of the tank based on the player's input.
+        // Ajustar la posición del tanque basandose en la entrada del jugador
         Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
 
         m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
@@ -101,7 +101,7 @@ public class TankMovement : MonoBehaviour
 
     private void Turn()
     {
-        // Adjust the rotation of the tank based on the player's input.
+        // Ajustar la rotación del tanque de acuerdo a la entrada del jugador
         float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
 
         Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
